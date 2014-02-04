@@ -3,4 +3,6 @@ dist
 .tmp
 .sass-cache
 template.js
+.bundle
+bin
 app/bower_components
