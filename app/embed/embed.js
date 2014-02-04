@@ -12,7 +12,7 @@
     var domready = require('domready');
     var scriptTag = document.getElementById('adn-comments');
     // Need to embed an iframe, and when its loaded get a DOM reference to it.
-    var iframeSrc = config.comments_root + '?comments_url=' + config.comments_url;
+    var iframeSrc = config.comments_root + '/index.html?comments_url=' + config.comments_url;
     var iframe = document.createElement('iframe');
     iframe.style.width = '100%';
     iframe.style.height = '200px';

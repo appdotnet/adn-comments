@@ -22,7 +22,7 @@ module.exports = function (grunt) {
   };
 
   var distAppConfig = _.extend({}, defaultAppConfig, {
-    app_root_url: 'https://adn-comments.s3.amazonaws.com/index.html',
+    app_root_url: 'https://adn-comments.s3.amazonaws.com',
     redirect_uri: 'https://adn-comments.s3.amazonaws.com/auth.html'
   });
 
