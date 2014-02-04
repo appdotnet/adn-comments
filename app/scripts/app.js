@@ -2,7 +2,6 @@
 
 var cometApp = angular.module('cometApp', [
     'ngCookies',
-    'ngResource',
     'ngSanitize',
     'ui.router',
     'angularLocalStorage',

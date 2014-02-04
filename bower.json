@@ -7,20 +7,15 @@
     "es5-shim": "2.1.0",
     "jquery": "1.10.2",
     "sass-bootstrap": "3.0.2",
-    "angular-resource": "1.2.6",
     "angular-cookies": "1.2.6",
     "angular-sanitize": "1.2.6",
     "angular-ui-router": "0.2.7",
     "lodash": "2.4.1",
     "angularLocalStorage": "0.1.7",
-    "angular-adn": "0.0.20",
+    "angular-adn": "0.0.23",
     "ng-file-upload": "1.2.4",
     "momentjs": "2.5.0",
     "angular-bootstrap": "0.10.0"
-  },
-  "devDependencies": {
-    "angular-mocks": "1.2.6",
-    "angular-scenario": "1.2.6"
   },
   "resolutions": {
     "angular": "1.2.6",

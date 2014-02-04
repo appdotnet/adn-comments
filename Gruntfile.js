@@ -22,8 +22,8 @@ module.exports = function (grunt) {
   };
 
   var distAppConfig = _.extend({}, defaultAppConfig, {
-    app_root_url: 'http://html5.alexkessinger.net',
-    redirect_uri: 'http://html5.alexkessinger.net/auth.html'
+    app_root_url: 'https://adn-comments.s3.amazonaws.com',
+    redirect_uri: 'https://adn-comments.s3.amazonaws.com/auth.html'
   });
 
   // Define the configuration for all the tasks
