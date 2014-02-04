@@ -357,6 +357,14 @@ module.exports = function (grunt) {
           }
         }
       }
+    },
+    cdn: {
+      options: {
+        cdn: 'https://d105v2jof9gtr3.cloudfront.net/',
+      },
+      dist: {
+        src: ['<%= yeoman.dist %>/index.html'],
+      }
     }
   });
 
@@ -400,6 +408,7 @@ module.exports = function (grunt) {
     'uglify',
     'rev',
     'usemin',
+    'cdn',
     'htmlmin'
   ]);
 

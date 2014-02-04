@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "dependencies": {
     "grunt-template": "~0.2.2",
-    "bower": "~1.2.8"
+    "bower": "~1.2.8",
+    "grunt-cdn": "~0.3.2"
   },
   "devDependencies": {
     "grunt": "~0.4.1",
