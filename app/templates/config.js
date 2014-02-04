@@ -1,0 +1,1 @@
+window.ADN_CONFIG = window.ADN_CONFIG || <%= config %>;

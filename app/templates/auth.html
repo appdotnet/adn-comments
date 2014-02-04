@@ -1,0 +1,8 @@
+<script type="text/javascript" charset="utf-8">
+	if (window.location.hash === '') {
+		window.location = 'https://account.app.net/oauth/authenticate?client_id=<%= client_id %>&scope=write_post&response_type=token&redirect_uri=<%= redirect_uri %>'
+	} else {
+		window.opener.authCallback(window.location.hash);
+		window.close();
+	}
+</script>

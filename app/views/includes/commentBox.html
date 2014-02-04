@@ -1,0 +1,36 @@
+<form name='comment-box' ng-submit='createComment(reply_to)' ng-show='reveal'>
+  <div class="form-group">
+    <textarea class="form-control" rows="3" name='text' ng-model='comment.text'></textarea>
+  </div>
+  <div class="form-group">
+    <div class='row'>
+      <div class="col-lg-1 col-sm-3 col-md-2 col-xs-2">
+        <span ng-bind='charCount()' ng-class="{'text-muted': charCount() < 0}"></span>
+      </div>
+      <div class="text-right col-lg-11 col-sm-9 col-md-10 col-xs-10">
+        <div class="right-buttons">
+          <div class='file-upload-container'>
+            <span class='after-upload text-overflow' ng-show='uploadDone'>
+              <span><a href='#' ng-click='removeFile()'><i class="fa fa-minus-circle"></i></a> {{fileName}}</span>
+            </span>
+            <div class="progress" ng-show='hasFiles && !uploadDone'>
+              <div class="progress-bar" role="progressbar" aria-valuenow="{{precentDone}}" aria-valuemin="0" aria-valuemax="100" style="width: {{precentDone}}%;">
+                <span class="sr-only">{{precentDone}}% Complete</span>
+                <span>{{fileName}}</span>
+              </div>
+            </div>
+            <button class='btn btn-link btn-xs add-files-button' style='position: relative;' ng-show='!hasFiles && auth.currentUser().loggedIn'>
+              <i class="fa fa-plus-circle"></i>
+              <span>Add Files</span>
+              <input type="file" style="position: absolute;top: 0;right: 0;margin: 0;opacity: 0;filter: alpha(opacity=0);transform: translate(-300px, 0) scale(4);font-size: 23px;direction: ltr;cursor: pointer;" ng-file-select="onFileSelect($files)">
+            </button>
+          </div>
+          <button type="submit" class="btn btn-link btn-xs" ng-disabled='charCount() < 0 || creatingPost' ng-class='{creatingPost:creatingPost}'>
+            <span class='action'>Comment</span>
+            <span class='loading' ng-show='creatingPost'><i class='fa fa-spinner fa-spin'></i></span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>

@@ -1,0 +1,28 @@
+<strong>
+  <span>{{allPosts.length}} Comments — </span>
+  <span ng-show='auth.currentUser().loggedIn'>Leave a comment as @{{}}</span>
+  <span ng-hide='auth.currentUser().loggedIn'><a href="#" onclick='window.promptLogin();'>Login to leave a comment</a></span>
+</strong>
+<div comet-coment-box reveal='showCommentBox' always-reveal='true' post-text='postText' append-self-link='true' root-post='true' reply-to='globalRootPost'></div>
+<div class='comments'>
+  <ul class='list-inline'>
+    <li class="dropdown" ng-hide='true'>
+      <a class="dropdown-toggle">
+        Sort by {{sortMethod}} <span class="caret"></span>
+      </a>
+      <ul class="dropdown-menu">
+        <li ng-repeat="choice in sortMethods">
+          <a href='#' ng-click='setSortMethod(choice)'>Sort by {{choice}}</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+  <hr>
+
+  <ul class="media-list">
+    <li ng-repeat='post in posts track by post.id'>
+    	<div class="media" ng-include="'views/includes/post.html'"></div>
+      <hr>
+    </li>
+  </ul>
+</div>
