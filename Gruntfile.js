@@ -145,7 +145,11 @@ module.exports = function (grunt) {
     'bower-install': {
       app: {
         html: '<%= yeoman.app %>/index.html',
-        ignorePath: '<%= yeoman.app %>/'
+        ignorePath: '<%= yeoman.app %>/',
+        exclude: [
+          "bower_components/almond/almond.js",
+          "bower_components/domready/ready.js"
+        ],
       }
     },
 
@@ -297,7 +301,7 @@ module.exports = function (grunt) {
           '.tmp/embed.js': [
             '<%= yeoman.app %>/scripts/config/config.js',
             '<%= yeoman.app %>/bower_components/almond/almond.js',
-            '<%= yeoman.app %>/bower_components/domready/ready.js',
+            '<%= yeoman.app %>/embed/ready.js',
             '<%= yeoman.app %>/embed/lodash.custom.js',
             '<%= yeoman.app %>/embed/messaging.js',
             '<%= yeoman.app %>/embed/embed.js'
@@ -309,7 +313,7 @@ module.exports = function (grunt) {
           '<%= yeoman.dist %>/embed.js': [
             '<%= yeoman.app %>/scripts/config/config.js',
             '<%= yeoman.app %>/bower_components/almond/almond.js',
-            '<%= yeoman.app %>/bower_components/domready/ready.js',
+            '<%= yeoman.app %>/embed/ready.js',
             '<%= yeoman.app %>/embed/lodash.custom.js',
             '<%= yeoman.app %>/embed/messaging.js',
             '<%= yeoman.app %>/embed/embed.js'

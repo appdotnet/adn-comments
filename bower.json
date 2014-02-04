@@ -15,7 +15,8 @@
     "angular-adn": "0.0.23",
     "ng-file-upload": "1.2.4",
     "momentjs": "2.5.0",
-    "angular-bootstrap": "0.10.0"
+    "angular-bootstrap": "0.10.0",
+    "almond": "~0.2.9"
   },
   "resolutions": {
     "angular": "1.2.6",
