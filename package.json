@@ -2,7 +2,8 @@
   "name": "comet",
   "version": "0.0.0",
   "dependencies": {
-    "grunt-template": "~0.2.2"
+    "grunt-template": "~0.2.2",
+    "bower": "~1.2.8"
   },
   "devDependencies": {
     "grunt": "~0.4.1",
@@ -28,7 +29,9 @@
     "load-grunt-tasks": "~0.2.0",
     "time-grunt": "~0.2.1",
     "lodash": "~2.4.1",
-    "grunt-angular-templates": "~0.5.1"
+    "grunt-angular-templates": "~0.5.1",
+    "bower": "~1.2.8",
+    "grunt-template": "~0.2.3"
   },
   "engines": {
     "node": ">=0.8.0"
