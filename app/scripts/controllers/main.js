@@ -285,19 +285,19 @@ angular.module('cometApp').controller('MainCtrl', function($scope, ADN, $sce, $s
 
     var setupThread = function (value) {
       // Make faux root posts all in one thread so we can use user streaming to get live updates to comments
-      var comment_annotation = value.annotations && value.annotations['com.rumproarious.comment'] && value.annotations['com.rumproarious.comment'][0].value;
-      if (comment_annotation && comment_annotation.root_post === 1) {
-        if (!$scope.globalRootPost) {
-          $scope.globalRootPost = value.thread_id;
-        }
+      // var comment_annotation = value.annotations && value.annotations['com.rumproarious.comment'] && value.annotations['com.rumproarious.comment'][0].value;
+      // if (comment_annotation && comment_annotation.root_post === 1) {
+      //   if (!$scope.globalRootPost) {
+      //     $scope.globalRootPost = value.thread_id;
+      //   }
 
-        value.thread_id = value.id;
-        return;
-      }
-      if (comment_annotation && comment_annotation.thread_id) {
-        value.thread_id = comment_annotation.thread_id;
-        return;
-      }
+      //   value.thread_id = value.id;
+      //   return;
+      // }
+      // if (comment_annotation && comment_annotation.thread_id) {
+      //   value.thread_id = comment_annotation.thread_id;
+      //   return;
+      // }
     };
 
     var sort = 'hn';
@@ -417,6 +417,9 @@ angular.module('cometApp').controller('MainCtrl', function($scope, ADN, $sce, $s
     };
 
     var fetchPostData = function () {
+        if (!ADNConfig.get('comments_url')) {
+          return;
+        }
         ADN.getAllPostsForUrl(ADNConfig.get('comments_url')).then(function () {
 
         }, function () {}, function (posts) {

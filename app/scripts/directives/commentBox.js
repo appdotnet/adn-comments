@@ -44,9 +44,12 @@ cometApp.directive('cometComentBox', function () {
       };
 
       var ellipse = function(string, max_chars, ellipse) {
+        if (!string) {
+          return '';
+        }
         max_chars = max_chars || 20;
         ellipse = ellipse || '…';
-        if (string.length <= max_chars) {
+        if (string && string.length <= max_chars) {
           return string;
         }
 
