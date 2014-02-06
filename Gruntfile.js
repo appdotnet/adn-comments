@@ -18,7 +18,13 @@ module.exports = function (grunt) {
   var defaultAppConfig = {
     app_root_url: 'http://127.0.0.1:9000',
     client_id: 'q6BSdP5DctemahG9EDZVAmCv2x2dbjZJ',
-    redirect_uri: 'http://127.0.0.1:9000/auth.html'
+    redirect_uri: 'http://127.0.0.1:9000/auth.html',
+    valid_config_keys: [
+      'comments_root',
+      'comments_url',
+      'default_at_reply',
+      'comments_origin'
+    ]
   };
 
   var distAppConfig = _.extend({}, defaultAppConfig, {
@@ -43,25 +49,21 @@ module.exports = function (grunt) {
     watch: {
       js: {
         files: ['<%= yeoman.app %>/scripts/{,*/}*.js'],
-        tasks: ['newer:jshint:all'],
         options: {
           livereload: true
         }
       },
       embed: {
         files: ['<%= yeoman.app %>/embed/{,*/}*.js'],
-        tasks: ['concat']
-      },
-      jsTest: {
-        files: ['test/spec/{,*/}*.js'],
-        tasks: ['newer:jshint:test']
+        tasks: ['concat:dev']
       },
       compass: {
         files: ['<%= yeoman.app %>/styles/{,*/}*.{scss,sass}'],
         tasks: ['compass:server', 'autoprefixer']
       },
       gruntfile: {
-        files: ['Gruntfile.js']
+        files: ['Gruntfile.js'],
+        tasks: ['template', 'concat:dev']
       },
       livereload: {
         options: {
@@ -394,7 +396,6 @@ module.exports = function (grunt) {
     grunt.log.warn('The `server` task has been deprecated. Use `grunt serve` to start a server.');
     grunt.task.run(['serve']);
   });
-
 
   grunt.registerTask('build', [
     'clean:dist',

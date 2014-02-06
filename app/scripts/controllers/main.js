@@ -20,11 +20,14 @@ angular.module('cometApp').factory('ADN', function($http, $q, ApiClient, Auth, A
                 params: params
             });
         },
-        postsForThread: function(post_id) {
+        postsForThread: function(post_id, min_id) {
             var params = {
-                count: 40,
-                include_annotations: 1,
+                count: 50,
+                include_annotations: 1
             };
+            if (min_id) {
+              params.before_id = min_id;
+            }
             return ApiClient.get({
                 url: 'posts/' + post_id + '/replies',
                 params: params
@@ -35,7 +38,7 @@ angular.module('cometApp').factory('ADN', function($http, $q, ApiClient, Auth, A
                 crosspost_url: url,
                 annotation_types: 'com.rumproarious.comment',
                 include_annotations: 1,
-                count: 40
+                count: 50
             };
 
             if (min_id) {
@@ -67,21 +70,20 @@ angular.module('cometApp').factory('ADN', function($http, $q, ApiClient, Auth, A
             url: 'posts/' + postId + '/repost',
           });
         },
+        dataAboutMe: function () {
+          return ApiClient.get({
+            url: '/users/me'
+          });
+        },
         getAllPostsForUrl: function (url) {
             var deferred = $q.defer();
             var _this = this;
             var posts = [];
-            var loops = 0;
             var get_posts = function (min_id) {
-                loops++;
                 _this.postsForUrl(url, min_id).then(function (data) {
                     var meta = data.data.meta;
                     var posts = data.data.data;
                     deferred.notify(posts);
-                    if (loops >= 10) {
-                        deferred.resolve();
-                        return;
-                    }
                     if (meta.more) {
                         get_posts(meta.min_id);
                     } else {
@@ -96,17 +98,11 @@ angular.module('cometApp').factory('ADN', function($http, $q, ApiClient, Auth, A
             var deferred = $q.defer();
             var _this = this;
             var posts = [];
-            var loops = 0;
             var get_posts = function (min_id) {
-                loops++;
                 _this.postsForThread(post_id, min_id).then(function (data) {
                     var meta = data.data.meta;
                     var posts = data.data.data;
                     deferred.notify(posts);
-                    if (loops >= 10) {
-                        deferred.resolve();
-                        return;
-                    }
                     if (meta.more) {
                         get_posts(meta.min_id);
                     } else {
@@ -149,10 +145,13 @@ angular.module('cometApp').filter('fromNow', function() {
     };
 });
 
-angular.module('cometApp').controller('MainCtrl', function($scope, ADN, $sce, $state, ADNConfig) {
+angular.module('cometApp').controller('MainCtrl', function($scope, ADN, $sce, $state, ADNConfig, Auth) {
 
     var trusted = {};
     var hideComments = /<a href=\"[^\"]*\">see comment<\/a> \[[^\]]*\]/i;
+    $scope.config = {
+      default_at_reply: ADNConfig.get('default_at_reply')
+    };
     $scope.getSafeHtml = function(html) {
         html = html.replace(hideComments, '');
         return trusted[html] || (trusted[html] = $sce.trustAsHtml(html));
@@ -220,6 +219,7 @@ angular.module('cometApp').controller('MainCtrl', function($scope, ADN, $sce, $s
     $scope.globalRootPost = false;
 
     var handleChildPost = function (parent, post) {
+        post.localThreadId = parent.id;
         if (sort === 'reverse') {
           parent.replies.unshift(post);
         } else if (sort === 'hn') {
@@ -271,7 +271,13 @@ angular.module('cometApp').controller('MainCtrl', function($scope, ADN, $sce, $s
 
       if (!value.imgUrl) {
           if (value.annotations && value.annotations['net.app.core.oembed']) {
+
+            if (value.annotations['net.app.core.oembed'][0].value.thumbnail_large_url) {
               value.imgUrl = value.annotations['net.app.core.oembed'][0].value.thumbnail_large_url;
+            }
+            if (value.annotations['net.app.core.oembed'][0].value.thumbnail_url) {
+              value.imgUrl = value.annotations['net.app.core.oembed'][0].value.thumbnail_url;
+            }
           }
       }
 
@@ -286,20 +292,19 @@ angular.module('cometApp').controller('MainCtrl', function($scope, ADN, $sce, $s
         }
 
         value.thread_id = value.id;
+        return;
+      }
+      if (comment_annotation && comment_annotation.thread_id) {
+        value.thread_id = comment_annotation.thread_id;
+        return;
       }
     };
 
     var sort = 'hn';
     var missingParents = [];
     var insertIntoViewStructure = function (value) {
-      if (value.thread_id !== value.id) {
-          var parent = postsById[value.thread_id];
-          if (parent) {
-            handleChildPost(parent, value);
-          } else {
-            missingParents.push(value);
-          }
-      } else {
+      if (value.thread_id === value.id) {
+          value.localThreadId = value.id;
           if (sort === 'reverse') {
             $scope.posts.unshift(value);
           } else if (sort === 'hn') {
@@ -308,10 +313,17 @@ angular.module('cometApp').controller('MainCtrl', function($scope, ADN, $sce, $s
           } else {
             $scope.posts.push(value);
           }
+      } else {
+          var parent = postsById[value.thread_id];
+          if (parent) {
+            handleChildPost(parent, value);
+          } else {
+            missingParents.push(value);
+          }
       }
       var stillMissing = [];
       angular.forEach(missingParents, function (value) {
-        var parent = postsById[value.reply_to];
+        var parent = postsById[value.thread_id];
         if (parent) {
           handleChildPost(parent, value);
         } else {
@@ -404,7 +416,7 @@ angular.module('cometApp').controller('MainCtrl', function($scope, ADN, $sce, $s
         });
     };
 
-    var fetchPostData = function() {
+    var fetchPostData = function () {
         ADN.getAllPostsForUrl(ADNConfig.get('comments_url')).then(function () {
 
         }, function () {}, function (posts) {
@@ -416,12 +428,20 @@ angular.module('cometApp').controller('MainCtrl', function($scope, ADN, $sce, $s
             });
         });
     };
-
-
+    $scope.userData = {};
+    var getMe = function () {
+      ADN.dataAboutMe().then(function (resp) {
+        $scope.userData = resp.data.data;
+      });
+    }
+    if (Auth.currentUser().loggedIn) {
+      getMe();
+    }
     $scope.postText = ADNConfig.get('comments_url');
     $scope.$on('login', function () {
       ADNConfig.config.api_client_root = 'https://alpha-api.app.net/stream/0/';
       fetchPostData();
+      getMe();
     });
     $scope.$on('logout', fetchPostData);
     $scope.$on('new-post', function (_, post) {

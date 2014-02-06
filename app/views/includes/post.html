@@ -21,7 +21,7 @@
       </li>
     </ul>
   </p>
-  <div comet-coment-box reply-to='post.id' reveal='post.showReply' reply-to-username='post.user.username' post-text='postText' append-self-link='false'></div>
+  <div comet-coment-box reply-to='post.id' reveal='post.showReply' reply-to-username='post.user.username' post-text='postText' thread-id='post.localThreadId'></div>
   <ul class="media-list">
     <li ng-repeat='post in post.replies track by post.id'>
       <div class="media" ng-include="'views/includes/post.html'"></div>

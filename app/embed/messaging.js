@@ -27,7 +27,7 @@
 
   MessageHandler.prototype.handle = function (e) {
     var matches = false;
-    console.log(e);
+
     if (this.settings.xdomain !== '*') {
       var regex = new RegExp(this.settings.xdomain + '$');
       if (!e.origin) {
@@ -37,7 +37,6 @@
       if (e.origin.match(regex)) {
         matches = true;
       } else {
-        console.log(e.origin, this.settings.xdomain);
         throw new Error("messageHandler( elem, e): The orgin " + e.origin + " doesn't match the responsiveiframe  xdomain "+this.settings.xdomain+".");
       }
 

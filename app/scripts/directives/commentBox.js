@@ -10,9 +10,7 @@ cometApp.directive('cometComentBox', function () {
     templateUrl: 'views/includes/commentBox.html',
     controller: function($scope, $upload, $q, $modal, ADNConfig, ApiClient, Auth) {
       var MAX_CHARS = 256;
-      if ($scope.appendSelfLink()) {
-        MAX_CHARS = MAX_CHARS - ' see comment'.length;
-      }
+
       var resetText = function () {
         var text = '';
         if ($scope.replyToUsername) {
@@ -45,14 +43,35 @@ cometApp.directive('cometComentBox', function () {
           return text;
       };
 
+      var ellipse = function(string, max_chars, ellipse) {
+        max_chars = max_chars || 20;
+        ellipse = ellipse || '…';
+        if (string.length <= max_chars) {
+          return string;
+        }
+
+        max_chars = max_chars - ellipse.length;
+
+        string = string.slice(0, max_chars);
+
+        return string + ellipse;
+
+      };
+
       $scope.charCount = function () {
         text = parse_markdown_links($scope.comment.text);
-        return MAX_CHARS - text.length;
+        var count = MAX_CHARS - text.length;
+        if (!$scope.replyTo) {
+          var postText = ellipse($scope.postText);
+          count -= (postText.length + 1);
+        }
+        return count;
       };
 
       var createPost = function (text, reply_to, file_data) {
-        if ($scope.appendSelfLink) {
-          text = text + ' [see comment](' + $scope.postText + ')';
+        if (!$scope.replyTo) {
+          var postText = ellipse($scope.postText);
+          text = text + ' ['+ postText +'](' + $scope.postText + ')';
         }
 
         var comment_annotation = {
@@ -62,7 +81,9 @@ cometApp.directive('cometComentBox', function () {
 
         if ($scope.rootPost()) {
           comment_annotation.value.root_post = 1;
-        };
+        } else {
+          comment_annotation.value.thread_id = $scope.threadId;
+        }
 
         var post = {
           include_annotations: 1,
@@ -125,6 +146,7 @@ cometApp.directive('cometComentBox', function () {
         modalInstance = $modal.open({
           templateUrl: 'views/includes/loginModalPrompt.html',
           controller: 'LoginModalInstanceCtrl',
+          backdrop: false,
         });
 
       };
@@ -211,9 +233,9 @@ cometApp.directive('cometComentBox', function () {
       'replyToUsername': '=',
       'reveal': '=',
       'alwaysReveal': '&',
-      'appendSelfLink': '&',
       'postText': '=',
       'rootPost': '&',
+      'threadId': '=',
     },
   };
 });

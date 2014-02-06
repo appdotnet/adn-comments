@@ -1,9 +1,9 @@
 <strong>
   <span>{{allPosts.length}} Comments — </span>
-  <span ng-show='auth.currentUser().loggedIn'>Leave a comment as @{{}}</span>
+  <span ng-show='auth.currentUser().loggedIn'>Leave a comment as @{{userData.username}}</span>
   <span ng-hide='auth.currentUser().loggedIn'><a href="#" onclick='window.promptLogin();'>Login to leave a comment</a></span>
 </strong>
-<div comet-coment-box reveal='showCommentBox' always-reveal='true' post-text='postText' append-self-link='true' root-post='true' reply-to='globalRootPost'></div>
+<div comet-coment-box reveal='showCommentBox' always-reveal='true' post-text='postText' root-post='true' reply-to='globalRootPost' reply-to-username='config.default_at_reply'></div>
 <div class='comments'>
   <ul class='list-inline'>
     <li class="dropdown" ng-hide='true'>

@@ -25,9 +25,13 @@ cometApp.config(function($stateProvider, $urlRouterProvider, $rootScopeProvider,
         controller: 'MainCtrl'
     });
 
-    ADNConfigProvider.setConfig({
-        comments_url: purl().param('comments_url') || window.location + '',
+    var config = {};
+    $.each(ADN_CONFIG.valid_config_keys, function (i, key) {
+      if (purl().param(key)) {
+        config[key] = purl().param(key);
+      }
     });
+    ADNConfigProvider.setConfig(config);
 
 });
 
@@ -47,7 +51,7 @@ var inIframe = function () {
 
 cometApp.run(function($rootScope, Auth, $state, $location, ADNConfig) {
     var config = {
-      target_url: ADNConfig.get('comments_url')
+      target_url: ADNConfig.get('comments_origin')
     };
 
     // If we are in an iFrame expose API
