@@ -1,10 +1,10 @@
-<a class="pull-left" href="{{urlForUserFromPost(post)}}" title='{{post.score}}'>
+<a class="pull-left" href="{{urlForUserFromPost(post)}}" title='{{post.score}}' target='_top'>
   <img class="media-object" src="{{avatarFromPost(post)}}" alt='{{usernameFromPost(post)}}' width='35' height='35'>
 </a>
 <div class="media-body">
   <h5 class="media-heading">
-    <a href='{{ urlForUserFromPost(post) }}' ng-bind='usernameFromPost(post)'></a>
-    <span class='muted'> &sdot; <a href='{{post.canonical_url}}' ng-bind='post.created_at| fromNow' title='{{post.created_at}}'></a></span>
+    <a href='{{ urlForUserFromPost(post) }}' ng-bind='usernameFromPost(post)' target='_top'></a>
+    <span class='muted'> &sdot; <a href='{{post.canonical_url}}' ng-bind='post.created_at| fromNow' target='_top' title='{{post.created_at}}'></a></span>
   </h5>
   <p ng-bind-html='getSafeHtml(post.html)'></p>
   <p ng-show='post.imgUrl' class='post-media'><img src="{{post.imgUrl}}" class="img-thumbnail"></p>

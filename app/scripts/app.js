@@ -16,14 +16,14 @@ cometApp.config(function($stateProvider, $urlRouterProvider, $rootScopeProvider,
     $rootScopeProvider.digestTtl(20);
     $anchorScrollProvider.disableAutoScrolling();
     // For any unmatched url, redirect to /
-    $urlRouterProvider.otherwise("/");
+    // $urlRouterProvider.otherwise("/");
     //
     // Now set up the states
-    $stateProvider.state('index', {
-        url: "/",
-        templateUrl: "views/main.html",
-        controller: 'MainCtrl'
-    });
+    // $stateProvider.state('index', {
+    //     url: "/",
+    //     templateUrl: "views/main.html",
+    //     controller: 'MainCtrl'
+    // });
 
     var config = {};
     $.each(ADN_CONFIG.valid_config_keys, function (i, key) {
@@ -66,9 +66,18 @@ cometApp.run(function($rootScope, Auth, $state, $location, ADNConfig) {
         var accessToken = purl('http://example.com/' + hash).fparam('access_token');
         if (accessToken) {
             Auth.login(accessToken);
-            $state.go('index');
+            // $state.go('index');
         } else {
-            $state.go('index.login_error');
+            //$state.go('index.login_error');
+            return;
         }
     };
+});
+
+$('body').on('click', '[itemscope="https://app.net/schemas/Post"] a', function () {
+  var href = $(this).attr('href');
+  if (href) {
+    window.top.location = href;
+    return false;
+  }
 });
