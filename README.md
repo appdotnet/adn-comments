@@ -9,14 +9,14 @@ While you can host the whole plugin yourself, you can also just use the App.net 
 Decide if you want to use one of the configuration variables.
 
 * **comments_url**: _(optional)_ What URL should the comments be related too. This will automatically be set to the current URL.
-* **default_at_reply**: _(opttional)_ What user should be the default @mention. Set this if you would like users to see a comment box with your username as the default text.
+* **default_at_reply**: _(optional)_ What user should be the default @mention. Set this if you would like users to see a comment box with your username as the default text.
 
 If you don't end up using any of the configuration variables. Don't worry about including the first script block;
 
 ```html
 <script>
   var ADN_COMMENTS_CONFIG = {
-    // comments_url: 'http://example.com/?random=124',
+    // comments_url: 'http://rumproarious.com/2014/02/06/try-out-the-app-dot-net-comments-widget/',
     // default_at_reply: 'voidfiles'
   };
 </script>
