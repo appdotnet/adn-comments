@@ -11,7 +11,7 @@ Decide if you want to use one of the configuration variables.
 * **comments_url**: _(optional)_ What URL should the comments be related too. This will automatically be set to the current URL.
 * **default_at_reply**: _(optional)_ What user should be the default @mention. Set this if you would like users to see a comment box with your username as the default text.
 
-If you don't end up using any of the configuration variables. Don't worry about including the first script block;
+If you don't end up using any of the configuration variables, don't worry about including the first script block;
 
 ```html
 <script>
@@ -27,7 +27,7 @@ Thats it! Just copy and paste this onto your website where you want to comments 
 
 ## Contibuting
 
-If you would like to contribute to the project, or host it your self here is the guide to getting it up an running.
+If you would like to contribute to the project (or host it yourself) here is the guide to getting it up an running.
 
 **You are going to need a few things.**
 
@@ -43,7 +43,7 @@ Create an App.net app by going to https://account.app.net/developer/apps/ and cl
 
 The first step here is to get your node environment up and running.
 
-You will need to edit `Gruntfile.js`. Modify this part. You should enter your client_id, and the redirect_uri you registered when you created an app.
+You will need to edit `Gruntfile.js`. Modify the part below; the `client_id` variable is given to you when you create an app, and the `redirect_uri` variable is what you entered for the redirect URI.
 
 ```js
   var defaultAppConfig = {
@@ -59,7 +59,7 @@ You will need to edit `Gruntfile.js`. Modify this part. You should enter your cl
   };
 ```
 
-Once you have modified Gruntfile.js, we can install all the dependencies. This all assumes your in the root of the checkout. Run these commands:
+Once you have modified Gruntfile.js, we can install all the dependencies. This all assumes your in the root of the repository. Run these commands:
 
 ```sh
 npm install    # install the node dependencies
