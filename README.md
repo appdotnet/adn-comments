@@ -8,8 +8,12 @@ While you can host the whole plugin yourself, you can also just use the App.net 
 
 Decide if you want to use one of the configuration variables.
 
-* **comments_url**: _(optional)_ What URL should the comments be related too. This will automatically be set to the current URL.
-* **default_at_reply**: _(optional)_ What user should be the default @mention. Set this if you would like users to see a comment box with your username as the default text.
+* **comments_url**: _(optional default: current url)_ For which URL should comments be displayed.
+* **default_at_reply**: _(optional)_ Default user to @mention when a comment is created.
+* **body_font_color**: _(optional defualt: #333)_ Main font color.
+* **link_font_color**: _(optional defualt: #428bca)_ Font color of links.
+* **accent_color**: _(optional defualt: #ccc)_ Color used for accents.
+* **font_family**: _(optional defualt: "Helvetica Neue",Helvetica,Arial,sans-serif)_ Main font-family.
 
 If you don't end up using any of the configuration variables, don't worry about including the first script block;
 
