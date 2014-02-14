@@ -23,7 +23,11 @@ module.exports = function (grunt) {
       'comments_root',
       'comments_url',
       'default_at_reply',
-      'comments_origin'
+      'comments_origin',
+      'body_font_color',
+      'link_font_color',
+      'accent_color',
+      'font_family',
     ]
   };
 

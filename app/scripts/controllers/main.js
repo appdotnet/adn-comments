@@ -150,8 +150,16 @@ angular.module('cometApp').controller('MainCtrl', function($scope, ADN, $sce, $s
     var trusted = {};
     var hideComments = /<a href=\"[^\"]*\">see comment<\/a> \[[^\]]*\]/i;
     $scope.config = {
-      default_at_reply: ADNConfig.get('default_at_reply')
+      default_at_reply: ADNConfig.get('default_at_reply'),
+      body_font_color: ADNConfig.get('body_font_color', '#333'),
+      link_font_color: ADNConfig.get('link_font_color', '#428bca'),
+      accent_color: ADNConfig.get('accent_color', '#ccc'),
+      font_family: ADNConfig.get('font_family', '"Helvetica Neue",Helvetica,Arial,sans-serif'),
     };
+    setTimeout(function () {
+      var html = $('[data-style-generator]').html();
+      $('#dynamicStyle').text(html);
+    }, 50);
     $scope.getSafeHtml = function(html) {
         html = html.replace(hideComments, '');
         return trusted[html] || (trusted[html] = $sce.trustAsHtml(html));
